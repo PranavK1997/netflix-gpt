@@ -1,10 +1,21 @@
 import { checkValidData } from "../utils/validate";
 import Header from "./Header";
 import { useRef, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errMessage, setErrMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const name = useRef();
   const email = useRef(null);
@@ -12,12 +23,59 @@ const Login = () => {
 
   const handleButtonClick = () => {
     const nameValue = isSignInForm ? undefined : name.current.value;
-    const message = checkValidData(
-      email.current.value,
-      password.current.value,
-      nameValue
-    );
+    const userEmail = email.current.value;
+    const userPassword = password.current.value;
+    const message = checkValidData(userEmail, userPassword, nameValue);
     setErrMessage(message);
+
+    if (message) return;
+
+    if (!isSignInForm) {
+      createUserWithEmailAndPassword(auth, userEmail, userPassword)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: nameValue,
+            photoURL:
+              "https://lh3.googleusercontent.com/a/ACg8ocIjkuSSA7vGmQqlnkUT6wpzGwNi1v2KBdf6kgeI0cE4qyX3Kh8p=s96-c",
+          })
+            .then(() => {
+              const { uid, displayName, email, password, photoURL } =
+                auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  displayName: displayName,
+                  email: email,
+                  password: password,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrMessage(error.message);
+            });
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrMessage(errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(auth, userEmail, userPassword)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+          navigate("browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrMessage(errorCode + "-" + errorMessage);
+        });
+    }
   };
 
   const toggleSignInForm = () => {
