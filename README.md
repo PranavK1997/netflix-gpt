@@ -15,6 +15,11 @@
 - Created our Redux store with user slice
 - Implemented Sign Out feature
 - Update profile API call
+- Fetch from TMDB
+- BugFix: Sign Up user displayName and profile picture update
+- BugFix: If the user is not logeed in redirect /browse to /login and vice-versa
+- Unsubscribe to the onAuthStateChanged callback
+- Add hardcoded values to the constants file
 
 # Features
 

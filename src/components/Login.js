@@ -7,14 +7,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BACKGROUND_IMG, PHOTO_URL } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errMessage, setErrMessage] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const name = useRef();
@@ -36,8 +35,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: nameValue,
-            photoURL:
-              "https://lh3.googleusercontent.com/a/ACg8ocIjkuSSA7vGmQqlnkUT6wpzGwNi1v2KBdf6kgeI0cE4qyX3Kh8p=s96-c",
+            photoURL: PHOTO_URL,
           })
             .then(() => {
               const { uid, displayName, email, password, photoURL } =
@@ -51,7 +49,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               setErrMessage(error.message);
@@ -68,7 +65,6 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
-          navigate("browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -85,10 +81,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/69bec183-9cc8-49d4-8fc2-08228d3c91b4/web/IN-en-20250414-TRIFECTA-perspective_c8273fb1-8860-4ff5-bd1c-c2c4b44d5f2a_large.jpg"
-          alt="background-img"
-        />
+        <img src={BACKGROUND_IMG} alt="background-img" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
