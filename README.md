@@ -20,6 +20,8 @@
 - BugFix: If the user is not logeed in redirect /browse to /login and vice-versa
 - Unsubscribe to the onAuthStateChanged callback
 - Add hardcoded values to the constants file
+- Registered for TMDB website, created an app and get access token
+- Get data from TMDB and add it to our browse page
 
 # Features
 
