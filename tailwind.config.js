@@ -3,7 +3,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,html}", // <- match your file types and folders
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        netflix: ["Helvetica Neue", "Arial", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };

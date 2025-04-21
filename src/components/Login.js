@@ -53,7 +53,6 @@ const Login = () => {
             .catch((error) => {
               setErrMessage(error.message);
             });
-          console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -64,7 +63,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth, userEmail, userPassword)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;

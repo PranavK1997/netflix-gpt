@@ -17,11 +17,11 @@ const Header = () => {
         const { uid, displayName, email, password, photoURL } = user;
         dispatch(
           addUser({
-            uid: uid,
-            displayName: displayName,
-            email: email,
-            password: password,
-            photoURL: photoURL,
+            uid,
+            displayName,
+            email,
+            password,
+            photoURL,
           })
         );
         navigate("/browse");
@@ -30,25 +30,29 @@ const Header = () => {
         navigate("/");
       }
     });
-    // Unsubscribe will be called when component will get unmounted
+
     return () => unSubscribe();
   }, []);
 
   const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {})
-      .catch((error) => {
-        navigate("/error");
-      });
+    signOut(auth).catch(() => navigate("/error"));
   };
+
   return (
-    <div className="absolute px-8 py-2 bg-gradient-to-b from-black w-screen z-10 flex justify-between">
-      <img className="w-44" src={LOGO_URL} alt="logo" />
+    <div className="absolute px-8 py-4 bg-gradient-to-b from-black w-screen z-20 flex justify-between items-center">
+      <img className="w-36 sm:w-44" src={LOGO_URL} alt="logo" />
       {user && (
-        <div className="flex p-2">
-          <img className="w-12 h-12" alt="user-icon" src={USER_ICON} />
-          <button className="font-bold text-white" onClick={handleSignOut}>
-            (Sign Out)
+        <div className="flex items-center gap-4">
+          <img
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded"
+            alt="user-icon"
+            src={USER_ICON}
+          />
+          <button
+            className="text-white text-sm sm:text-base font-semibold hover:underline"
+            onClick={handleSignOut}
+          >
+            Sign Out
           </button>
         </div>
       )}

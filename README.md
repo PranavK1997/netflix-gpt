@@ -22,6 +22,13 @@
 - Add hardcoded values to the constants file
 - Registered for TMDB website, created an app and get access token
 - Get data from TMDB and add it to our browse page
+- Custom hook for now playing movies
+- Update store with movies data
+- Planning for main container and secondary container
+- Fetch data for trailer video
+- Update the store with trailer video data
+- Embedded the youtube video and make it autoplay with mute
+- Added tailwind classes to make main container look awesome
 
 # Features
 
