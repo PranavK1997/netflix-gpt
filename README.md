@@ -35,6 +35,7 @@
 - TMDB Image CDN
 - Made the browse page amazing with Tailwind css
 - Created custom hooks for different types of card
+- Building GPT search feature
 
 # Features
 
